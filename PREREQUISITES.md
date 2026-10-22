@@ -1,7 +1,7 @@
 # Prerequisites
 
 Concepts an audience should already understand (or be pointed to) before walking through this
-project: a Terraform-managed EKS deployment across `dev`, `qa`, and `prod`, with GitHub Actions
+project: a Terraform-managed EKS deployment across `dev`, `qa`, and `prd`, with GitHub Actions
 driving plan/apply/destroy via AWS OIDC.
 
 ## AWS
@@ -46,7 +46,7 @@ driving plan/apply/destroy via AWS OIDC.
 ## GitHub
 
 - GitHub Actions workflow triggers (`pull_request`, `push`, `workflow_dispatch`)
-- Matrix strategy — fanning a single job out across dev/qa/prod
+- Matrix strategy — fanning a single job out across dev/qa/prd
 - GitHub Environments — per-environment secrets/variables and approval gates
 - OIDC federation from GitHub Actions to AWS (no static AWS credentials in the repo)
 - Workflow permissions scoping (`id-token: write`, `contents: read`, `pull-requests: write`)
