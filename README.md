@@ -48,7 +48,7 @@ every setting is checked for sensible values before anything is built.
 | | dev | qa | prd |
 |---|---|---|---|
 | Availability zones | 2 | 2 | 3 |
-| Servers (min / max / starting) | 1 / 2 / 1 | 1 / 3 / 2 | 2 / 4 / 3 |
+| Servers (min / max / starting) | 1 / 2 / 1 | 1 / 2 / 1 | 1 / 2 / 1 |
 | Server size | t3.small | t3.small | t3.small |
 
 ## Where Terraform keeps its records (remote state)
