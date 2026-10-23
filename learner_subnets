@@ -1,0 +1,19 @@
+{
+  "vpc_cidr": "172.31.0.0/16",
+  "region": "af-south-1",
+  "existing_default_subnets": {
+    "af-south-1a": "172.31.0.0/20",
+    "af-south-1c": "172.31.16.0/20",
+    "af-south-1b": "172.31.32.0/20"
+  },
+  "learners": {
+    "trimm-s": {
+      "reserved_block": "172.31.148.0/22",
+      "subnets": {
+        "af-south-1a": "172.31.148.0/24",
+        "af-south-1b": "172.31.149.0/24",
+        "af-south-1c": "172.31.150.0/24"
+      }
+    }
+  }
+}
