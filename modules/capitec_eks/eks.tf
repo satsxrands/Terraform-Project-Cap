@@ -138,12 +138,12 @@ resource "aws_eks_node_group" "main" {
   subnet_ids      = [for s in aws_subnet.public : s.id]
 
   capacity_type  = var.capacity_type
-  instance_types = var.instance_types
+  instance_types = ["t3.small"]
 
   scaling_config {
-    min_size     = var.scaling_config.min_size
-    max_size     = var.scaling_config.max_size
-    desired_size = var.scaling_config.desired_size
+    min_size     = 1
+    max_size     = 2
+    desired_size = 1
   }
 
   update_config {
@@ -151,7 +151,7 @@ resource "aws_eks_node_group" "main" {
   }
 
   # The cluster autoscaler owns desired_size after creation; without this
-  # every apply would reset it back to the tfvars value.
+  # every apply would reset it back to the value set above.
   lifecycle {
     ignore_changes = [scaling_config[0].desired_size]
   }
