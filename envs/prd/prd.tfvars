@@ -19,15 +19,7 @@ subnets = {
   "af-south-1c" = "172.31.151.0/25"
 }
 
-instance_types = ["t3.small"]
-capacity_type  = "ON_DEMAND"
-
-# desired_size is only the initial value - the autoscaler may change it later.
-scaling_config = {
-  min_size     = 2
-  max_size     = 4
-  desired_size = 3
-}
+capacity_type = "ON_DEMAND"
 
 node_port               = 30007
 node_port_ingress_cidrs = ["0.0.0.0/0"]
