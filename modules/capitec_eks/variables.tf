@@ -48,21 +48,6 @@ variable "subnets" {
   }
 }
 
-variable "instance_types" {
-  type        = list(string)
-  description = "EC2 instance types for the managed node group, e.g. [\"t2.small\"]"
-
-  validation {
-    condition     = length(var.instance_types) > 0
-    error_message = "instance_types must contain at least one instance type."
-  }
-
-  validation {
-    condition     = alltrue([for t in var.instance_types : can(regex("^[a-z][a-z0-9]*\\.[a-z0-9]+$", t))])
-    error_message = "Each instance type must look like t2.small."
-  }
-}
-
 variable "capacity_type" {
   type        = string
   description = "Node capacity type: ON_DEMAND or SPOT"
@@ -71,28 +56,6 @@ variable "capacity_type" {
   validation {
     condition     = contains(["ON_DEMAND", "SPOT"], var.capacity_type)
     error_message = "capacity_type must be ON_DEMAND or SPOT."
-  }
-}
-
-variable "scaling_config" {
-  type = object({
-    min_size     = number
-    max_size     = number
-    desired_size = number
-  })
-  description = "Node group scaling bounds. desired_size is only the initial value; the autoscaler may change it afterwards."
-
-  validation {
-    condition     = var.scaling_config.min_size >= 1
-    error_message = "scaling_config.min_size must be at least 1."
-  }
-
-  validation {
-    condition = (
-      var.scaling_config.min_size <= var.scaling_config.desired_size &&
-      var.scaling_config.desired_size <= var.scaling_config.max_size
-    )
-    error_message = "scaling_config must satisfy min_size <= desired_size <= max_size."
   }
 }
 
