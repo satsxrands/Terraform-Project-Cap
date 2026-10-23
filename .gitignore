@@ -5,3 +5,5 @@
 *.tfplan
 tfplan
 plan_output.txt
+# Per-environment Terraform data directories (created by scripts/tf.sh)
+.terraform-*/

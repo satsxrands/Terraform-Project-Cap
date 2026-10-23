@@ -3,7 +3,7 @@
 variable "prefix" {
   type        = string
   description = "distinguishing prefix for resource arguments which identifies the owner <surname><first_initial>"
-  default     = "seemat"
+  default     = "trimmst"
 }
 
 #TODO: Create another variable for the environment name.
