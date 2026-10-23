@@ -59,8 +59,7 @@ jobs:
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - uses: hashicorp/setup-terraform@v3
@@ -132,8 +131,7 @@ jobs:
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - uses: hashicorp/setup-terraform@v3
@@ -166,8 +164,7 @@ jobs:
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - uses: hashicorp/setup-terraform@v3
@@ -190,41 +187,3 @@ jobs:
               terraform destroy -var-file=envs/${{ github.event.inputs.environment }}/${{ github.event.inputs.environment }}.tfvars -auto-approve -no-color
               ;;
           esac
-  destroy-all:
-    name: Destroy All Environments
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
-    needs: fmt
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        env: [dev, qa, prd]
-    environment: ${{ matrix.env }}
-    concurrency:
-      group: terraform-destroy-${{ matrix.env }}
-      cancel-in-progress: false
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
-
-      - name: Init
-        run: terraform init -backend-config=envs/${{ matrix.env }}/${{ matrix.env }}.tfbackend
-
-      - name: Destroy (${{ matrix.env }})
-        run: |
-          terraform destroy \
-            -var-file=envs/${{ matrix.env }}/${{ matrix.env }}.tfvars \
-            -auto-approve \
-            -no-color
