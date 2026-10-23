@@ -31,23 +31,9 @@ variable "subnets" {
   description = "Map of availability zone => subnet CIDR block for this environment"
 }
 
-variable "instance_types" {
-  type        = list(string)
-  description = "EC2 instance types for the node group"
-}
-
 variable "capacity_type" {
   type        = string
   description = "ON_DEMAND or SPOT"
-}
-
-variable "scaling_config" {
-  type = object({
-    min_size     = number
-    max_size     = number
-    desired_size = number
-  })
-  description = "Node group min/max/initial-desired size"
 }
 
 variable "node_port" {
